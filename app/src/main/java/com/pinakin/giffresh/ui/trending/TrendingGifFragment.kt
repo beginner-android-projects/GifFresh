@@ -3,6 +3,7 @@ package com.pinakin.giffresh.ui.trending
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
-    private val trendingGifViewModel: TrendingGifViewModel by viewModels()
+    private val trendingGifViewModel: TrendingGifViewModel by activityViewModels()
 
     private lateinit var srfTrendingGif: SwipeRefreshLayout
     private lateinit var recTrendingGif: RecyclerView
@@ -57,6 +58,6 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
         }
 
 
-        trendingGifViewModel.search("ironman")
+        trendingGifViewModel.getTrendingGifs()
     }
 }
