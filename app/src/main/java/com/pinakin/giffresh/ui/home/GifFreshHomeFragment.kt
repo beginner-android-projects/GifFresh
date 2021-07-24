@@ -20,8 +20,6 @@ class GifFreshHomeFragment : Fragment(R.layout.fragment_giffresh_home) {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
-    private lateinit var tipSearch: TextInputLayout
-    private lateinit var edtSearch: TextInputEditText
 
     private lateinit var gifFreshHomeAdapter: GifFreshHomeAdapter
 
@@ -33,13 +31,7 @@ class GifFreshHomeFragment : Fragment(R.layout.fragment_giffresh_home) {
         tabLayout = view.findViewById(R.id.tab)
         viewPager = view.findViewById(R.id.view_pager)
 
-        tipSearch = view.findViewById(R.id.tip_search)
-        edtSearch = view.findViewById(R.id.edt_search)
 
-        tipSearch.setEndIconOnClickListener {
-            edtSearch.text?.clear()
-            trendingGifViewModel.getTrendingGifs()
-        }
 
         gifFreshHomeAdapter = GifFreshHomeAdapter(this)
 
@@ -55,15 +47,6 @@ class GifFreshHomeFragment : Fragment(R.layout.fragment_giffresh_home) {
         }.attach()
 
 
-        edtSearch.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                v.hideKeyboard()
-                trendingGifViewModel.search(edtSearch.text.toString())
-                return@setOnEditorActionListener true
-            }
-
-            return@setOnEditorActionListener false
-        }
     }
 }
