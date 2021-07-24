@@ -23,6 +23,7 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
     private lateinit var srfTrendingGif: SwipeRefreshLayout
     private lateinit var recTrendingGif: RecyclerView
+    private lateinit var trendingGifAdapter: TrendingGifAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,8 +31,7 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
         srfTrendingGif = view.findViewById(R.id.srf_trending_gif)
         recTrendingGif = view.findViewById(R.id.rec_trending_gif)
 
-        val adapter = TrendingGifAdapter(emptyList())
-        recTrendingGif.adapter = adapter
+
         recTrendingGif.layoutManager = LinearLayoutManager(requireContext())
         recTrendingGif.addItemDecoration(
             DividerItemDecoration(
@@ -45,11 +45,18 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 trendingGifViewModel.trendingGifs.collect {
-                    adapter.gifs = it
-                    adapter.notifyDataSetChanged()
+
+                    if (::trendingGifAdapter.isInitialized.not()) {
+                        trendingGifAdapter = TrendingGifAdapter(it)
+                        recTrendingGif.adapter = trendingGifAdapter
+                    }
+                    trendingGifAdapter.trendingGif = it
+                    trendingGifAdapter.notifyDataSetChanged()
                 }
             }
         }
 
+
+        trendingGifViewModel.getTrendingGifs()
     }
 }
