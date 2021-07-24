@@ -26,6 +26,21 @@ class NetworkDataSource @Inject constructor(
         }
     }
 
+    suspend fun search(query: String, page: Int, size: Int = 20): TrendingGif{
+        val response = safeCall {
+            api.search(query = query,page = page,size = size)
+        }
+
+        if (response != null && response.meta.status == 200) {
+            return response
+        } else {
+            throw GifFreshException(
+                1000,
+                "ID = ${response?.meta?.responseId} Status = ${response?.meta?.status} Message = ${response?.meta?.msg}"
+            )
+        }
+    }
+
     private suspend inline fun <T> safeCall(crossinline responseFun: suspend () -> Response<T>): T? {
         return try {
             val result = responseFun.invoke()

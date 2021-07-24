@@ -15,4 +15,9 @@ class TrendingGifRepository @Inject constructor(
         val response = networkDataSource.getTrendingGifs(page, size)
         emit(response)
     }
+
+    fun search(query: String, page: Int = 0, size: Int = 20): Flow<TrendingGif> = flow {
+        val response = networkDataSource.search(query, page, size)
+        emit(response)
+    }
 }

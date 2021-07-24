@@ -13,4 +13,12 @@ interface GifFreshApi {
         @Query("offset") page: Int = 0,
         @Query("limit") size: Int = 20
     ): Response<TrendingGif>
+
+    @GET("search")
+    suspend fun search(
+        @Query("api_key") apiKey: String = "mRlz9pzysR8FCkH8f3RXX4or7x2kTUU7",
+        @Query("q") query: String,
+        @Query("offset") page: Int = 0,
+        @Query("limit") size: Int = 20
+    ): Response<TrendingGif>
 }

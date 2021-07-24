@@ -31,4 +31,14 @@ class TrendingGifViewModel @Inject constructor(
                 _trendingGifs.emit(it)
             }
     }
+
+    fun search(query: String, page: Int = 0, size: Int = 20) = viewModelScope.launch {
+        repository.search(query, page, size)
+            .catch { error ->
+
+            }
+            .collect {
+                _trendingGifs.emit(it)
+            }
+    }
 }

@@ -57,6 +57,6 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
         }
 
 
-        trendingGifViewModel.getTrendingGifs()
+        trendingGifViewModel.search("ironman")
     }
 }
