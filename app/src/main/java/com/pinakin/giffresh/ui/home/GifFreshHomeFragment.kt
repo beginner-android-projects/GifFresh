@@ -24,12 +24,15 @@ class GifFreshHomeFragment : Fragment(R.layout.fragment_giffresh_home) {
         binding.viewPager.adapter = gifFreshHomeAdapter
 
         TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-            var tabName = if (position == 0) {
-                "Trending"
+            var tabConfig = if (position == 0) {
+                Pair("Trending",R.drawable.ic_baseline_trending_up_24)
             } else {
-                "Favourite"
+                Pair("Favourite",R.drawable.ic_baseline_favorite_24)
             }
-            tab.text = tabName
+
+
+            tab.text = tabConfig.first
+            tab.setIcon(tabConfig.second)
         }.attach()
 
     }
