@@ -9,6 +9,7 @@ GifFresh allows you to see trending gifs, It also allows you to search gifs and 
 - Kotlin (version 1.5.21)
 - Gradle (version 4.2.2)
 - Github
+- PostMan
 
 
 ## ThirdParty Library
@@ -20,3 +21,4 @@ GifFresh allows you to see trending gifs, It also allows you to search gifs and 
 - Dagger Hilt (version 2.37)
 - Coil (version 1.2.1)
 - room (version )
+- paging (version 3.0.1)
