@@ -2,5 +2,6 @@ package com.pinakin.giffresh.data.remote.model
 
 data class GifData(
     val id: String,
-    val images: Images
+    val images: Images,
+    var isFavourite: Boolean
 )

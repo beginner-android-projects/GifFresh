@@ -29,5 +29,5 @@ class GifRepository @Inject constructor(
 
     suspend fun saveGif(gifData: GifData) = localDataSource.insert(gifData)
 
-
+    suspend fun isFavourite(id: String) = localDataSource.isFavourite(id)
 }

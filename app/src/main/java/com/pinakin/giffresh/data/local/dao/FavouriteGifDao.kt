@@ -16,6 +16,9 @@ interface FavouriteGifDao {
     @Query("SELECT * FROM fav_gif")
     fun getFavouriteGifs(): Flow<List<FavouriteGif>>
 
-    @Query("SELECT id FROM fav_gif where id LIMIT :id")
-    fun getAllFavouriteGifsId(id: String): Flow<List<String>>
+    @Query("SELECT id FROM fav_gif id")
+    fun getAllFavouriteGifsId(): Flow<List<String>>
+
+    @Query("SELECT EXISTS(SELECT * FROM fav_gif where id = :id)")
+    suspend fun isFavourite(id: String): Boolean
 }
