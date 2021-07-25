@@ -85,6 +85,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipe_refresh_layout"
 
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
 
     testImplementation "junit:junit:$versions.junit"
 

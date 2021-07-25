@@ -1,7 +1,7 @@
 package com.pinakin.giffresh.di
 
 import com.pinakin.giffresh.data.remote.GifFreshApi
-import com.pinakin.giffresh.datasource.NetworkDataSource
+import com.pinakin.giffresh.datasource.GifDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideNetworkDataSource(api: GifFreshApi) = NetworkDataSource(api)
+    fun provideGifDataSource(api: GifFreshApi) = GifDataSource(api)
 }

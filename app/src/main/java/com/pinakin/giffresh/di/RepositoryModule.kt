@@ -1,7 +1,7 @@
 package com.pinakin.giffresh.di
 
-import com.pinakin.giffresh.datasource.NetworkDataSource
-import com.pinakin.giffresh.repository.TrendingGifRepository
+import com.pinakin.giffresh.datasource.GifDataSource
+import com.pinakin.giffresh.repository.GifRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTrendingGifRepository(
-        networkDataSource: NetworkDataSource
-    ) = TrendingGifRepository(networkDataSource)
+    fun provideGifRepository(
+        gifDataSource: GifDataSource
+    ) = GifRepository(gifDataSource)
 }
