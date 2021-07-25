@@ -55,7 +55,11 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
         )
 
 
-        gifAdapter = GifPagedAdapter()
+        gifAdapter = GifPagedAdapter() { gifData ->
+            if (gifData != null) {
+                gifViewModel.saveGif(gifData)
+            }
+        }
         binding.recTrendingGif.adapter = gifAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {

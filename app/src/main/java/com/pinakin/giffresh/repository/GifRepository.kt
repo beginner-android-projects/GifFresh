@@ -5,12 +5,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.datasource.GifDataSource
+import com.pinakin.giffresh.datasource.LocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GifRepository @Inject constructor(
-    private val dataSource: GifDataSource
+    private val dataSource: GifDataSource,
+    private val localDataSource: LocalDataSource
 ) {
+
+    val favouriteGifs = localDataSource.getFavouriteGifs()
 
     fun fetchGif(query: String?): Flow<PagingData<GifData>> = Pager(
         config = PagingConfig(
@@ -22,4 +26,8 @@ class GifRepository @Inject constructor(
             dataSource
         }
     ).flow
+
+    suspend fun saveGif(gifData: GifData) = localDataSource.insert(gifData)
+
+
 }

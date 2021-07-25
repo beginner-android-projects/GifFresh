@@ -35,7 +35,6 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 favouriteGifViewModel.favouriteGifs.collect {
-
                     favouriteGifAdapter.gifs = it
                     favouriteGifAdapter.notifyDataSetChanged()
                 }

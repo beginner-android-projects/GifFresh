@@ -1,6 +1,7 @@
 package com.pinakin.giffresh.di
 
 import com.pinakin.giffresh.datasource.GifDataSource
+import com.pinakin.giffresh.datasource.LocalDataSource
 import com.pinakin.giffresh.repository.GifRepository
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideGifRepository(
-        gifDataSource: GifDataSource
-    ) = GifRepository(gifDataSource)
+        gifDataSource: GifDataSource,
+        localDataSource: LocalDataSource
+    ) = GifRepository(gifDataSource, localDataSource)
 }

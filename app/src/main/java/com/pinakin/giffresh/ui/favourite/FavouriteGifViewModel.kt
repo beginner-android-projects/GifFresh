@@ -2,27 +2,23 @@ package com.pinakin.giffresh.ui.favourite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pinakin.giffresh.repository.GifRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class FavouriteGifViewModel @Inject constructor(): ViewModel() {
+class FavouriteGifViewModel @Inject constructor(
+    repository: GifRepository
+) : ViewModel() {
 
-    val favouriteGifs: SharedFlow<List<String>> = flow<List<String>> {
-        val gifs = listOf(
-            "https://media.giphy.com/media/l4FGBYUAKXu5rCN9K/giphy.gif",
-            "https://media.giphy.com/media/3ov9jVsyMdxWpBU5z2/giphy.gif",
-            "https://media.giphy.com/media/xUA7b4cBBELoFPeUsU/giphy.gif",
-            "https://media.giphy.com/media/dapSl72ddH5gQ/giphy.gif"
-        )
-        emit(gifs)
-    }.shareIn(
+    val favouriteGifs = repository.favouriteGifs.map { favGifs ->
+        return@map favGifs.map {
+            it.data
+        }
+    }.stateIn(
         scope = viewModelScope,
-        replay = 0,
-        started = SharingStarted.WhileSubscribed(500)
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
     )
 }

@@ -15,7 +15,9 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.pinakin.giffresh.R
 import com.pinakin.giffresh.data.remote.model.GifData
 
-class GifPagedAdapter : PagingDataAdapter<GifData, GifPagedAdapter.ViewHolder>(DataDifferentiator) {
+class GifPagedAdapter(
+    private val listener: (GifData?) -> Unit
+) : PagingDataAdapter<GifData, GifPagedAdapter.ViewHolder>(DataDifferentiator) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgGifItem: ShapeableImageView = itemView.findViewById(R.id.gif)
@@ -34,6 +36,10 @@ class GifPagedAdapter : PagingDataAdapter<GifData, GifPagedAdapter.ViewHolder>(D
             .build()
 
         holder.imgGifItem.load(data?.url, imageLoader)
+
+        holder.imgGifItem.setOnClickListener {
+            listener(getItem(position))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
