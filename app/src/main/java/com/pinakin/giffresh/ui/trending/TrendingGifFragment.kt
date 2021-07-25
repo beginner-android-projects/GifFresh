@@ -10,12 +10,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.pinakin.giffresh.R
+import com.pinakin.giffresh.databinding.FragmentTrendingGifBinding
 import com.pinakin.giffresh.utils.hideKeyboard
-import com.pinakin.giffresh.widget.RecyclerView
+import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,45 +21,33 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
+    private val binding by viewBindings(FragmentTrendingGifBinding::bind)
 
     private val gifViewModel: GifViewModel by viewModels()
-
-    private lateinit var srfTrendingGif: SwipeRefreshLayout
-    private lateinit var recTrendingGif: RecyclerView
-
-    private lateinit var tipSearch: TextInputLayout
-    private lateinit var edtSearch: TextInputEditText
-
-
     private lateinit var gifAdapter: GifPagedAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        srfTrendingGif = view.findViewById(R.id.srf_trending_gif)
-        recTrendingGif = view.findViewById(R.id.rec_trending_gif)
 
-        tipSearch = view.findViewById(R.id.tip_search)
-        edtSearch = view.findViewById(R.id.edt_search)
-
-        tipSearch.setEndIconOnClickListener {
-            edtSearch.text?.clear()
+        binding.tipSearch.setEndIconOnClickListener {
+            binding.edtSearch.text?.clear()
             gifViewModel.fetchGifs()
         }
 
-        edtSearch.setOnEditorActionListener { v, actionId, event ->
+        binding.edtSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 v.hideKeyboard()
-                gifViewModel.fetchGifs(edtSearch.text.toString())
+                gifViewModel.fetchGifs(binding.edtSearch.text.toString())
                 return@setOnEditorActionListener true
             }
 
             return@setOnEditorActionListener false
         }
 
-        recTrendingGif.layoutManager = LinearLayoutManager(requireContext())
-        recTrendingGif.addItemDecoration(
+        binding.recTrendingGif.layoutManager = LinearLayoutManager(requireContext())
+        binding.recTrendingGif.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 DividerItemDecoration.VERTICAL
@@ -70,7 +56,7 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
 
         gifAdapter = GifPagedAdapter()
-        recTrendingGif.adapter = gifAdapter
+        binding.recTrendingGif.adapter = gifAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
