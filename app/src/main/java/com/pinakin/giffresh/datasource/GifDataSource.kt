@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GifDataSource @Inject constructor(
     private val api: GifFreshApi,
-    var query: String? = null
+    private val query: String? = null
 ) : PagingSource<Int, GifData>() {
 
 
@@ -32,7 +32,7 @@ class GifDataSource @Inject constructor(
                 }
             }
             val nextKey = if (response != null) {
-                pageIndex + (params.loadSize / 20)
+                pageIndex + 1
             } else {
                 null
             }
@@ -40,7 +40,7 @@ class GifDataSource @Inject constructor(
             if (response != null && response.meta.status == 200) {
                 LoadResult.Page(
                     data = response.data,
-                    prevKey = if (pageIndex == 0) null else pageIndex,
+                    prevKey = if (pageIndex == 0) null else pageIndex-1,
                     nextKey = nextKey
                 )
             } else {

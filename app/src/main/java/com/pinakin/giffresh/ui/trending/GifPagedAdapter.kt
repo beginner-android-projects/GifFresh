@@ -40,8 +40,13 @@ class GifPagedAdapter(
 
         holder.imgGifItem.load(data?.url, imageLoader)
 
-        holder.imgGifItem.setOnClickListener {
-            listener(getItem(position))
+        gifImage?.isFavourite?.let {
+            holder.checkBox.isChecked = it
+        }
+
+        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            gifImage?.isFavourite = isChecked
+            listener(gifImage)
         }
     }
 
@@ -58,7 +63,7 @@ class GifPagedAdapter(
         }
 
         override fun areContentsTheSame(oldItem: GifData, newItem: GifData): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
     }
 }

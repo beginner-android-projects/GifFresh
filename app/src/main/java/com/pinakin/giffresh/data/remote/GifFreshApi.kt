@@ -11,7 +11,7 @@ interface GifFreshApi {
     suspend fun getTrendingGifs(
         @Query("api_key") apiKey: String = "mRlz9pzysR8FCkH8f3RXX4or7x2kTUU7",
         @Query("offset") page: Int = 0,
-        @Query("limit") size: Int = 20
+        @Query("limit") size: Int = 8
     ): Response<TrendingGif>
 
     @GET("search")
@@ -19,6 +19,6 @@ interface GifFreshApi {
         @Query("api_key") apiKey: String = "mRlz9pzysR8FCkH8f3RXX4or7x2kTUU7",
         @Query("q") query: String?,
         @Query("offset") page: Int = 0,
-        @Query("limit") size: Int = 20
+        @Query("limit") size: Int = 8
     ): Response<TrendingGif>
 }

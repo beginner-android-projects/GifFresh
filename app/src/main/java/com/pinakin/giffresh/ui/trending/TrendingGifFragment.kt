@@ -2,18 +2,16 @@ package com.pinakin.giffresh.ui.trending
 
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pinakin.giffresh.R
+import com.pinakin.giffresh.data.local.entity.FavouriteGif
 import com.pinakin.giffresh.databinding.FragmentTrendingGifBinding
-import com.pinakin.giffresh.utils.hideKeyboard
 import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -43,7 +41,11 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
         gifAdapter = GifPagedAdapter() { gifData ->
             if (gifData != null) {
-                gifViewModel.saveGif(gifData)
+                if (gifData.isFavourite) {
+                    gifViewModel.saveGif(gifData)
+                } else {
+                    gifViewModel.deleteGif(FavouriteGif(gifData.id, gifData))
+                }
             }
         }
         binding.recTrendingGif.adapter = gifAdapter
@@ -52,11 +54,16 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 gifViewModel.gifs.collectLatest {
                     gifAdapter.submitData(it)
+                    binding.srfTrendingGif.isRefreshing = false
                 }
             }
         }
 
         gifViewModel.fetchGifs()
+
+        binding.srfTrendingGif.setOnRefreshListener {
+            gifAdapter.refresh()
+        }
 
     }
 }
