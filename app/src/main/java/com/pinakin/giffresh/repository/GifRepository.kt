@@ -23,7 +23,7 @@ class GifRepository @Inject constructor(
             enablePlaceholders = false
         ),
         pagingSourceFactory = {
-            GifDataSource(api, query)
+            GifDataSource(api, query, localDataSource)
         }
     ).flow
 

@@ -28,21 +28,9 @@ class GifViewModel @Inject constructor(
 
     fun fetchGifs(query: String? = null) = viewModelScope.launch {
 
-        val flow = gifRepository.fetchGif(query).map { pagingData ->
-
-            pagingData.map { gifData ->
-
-                gifData.isFavourite = gifRepository.isFavourite(gifData.id)
-                gifData
-            }
-        }
-
-        flow.collectLatest {
-
+        gifRepository.fetchGif(query).collectLatest {
             _gifs.value = it
-
         }
-
     }
 
     fun saveGif(gifData: GifData) = viewModelScope.launch {

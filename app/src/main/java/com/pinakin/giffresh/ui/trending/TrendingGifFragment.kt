@@ -69,7 +69,6 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
         )
 
-
         gifAdapter = GifPagedAdapter() { gifData ->
 
             if (gifData != null) {
@@ -83,7 +82,10 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
             }
         }
 
-        binding.recTrendingGif.adapter = gifAdapter
+        binding.recTrendingGif.adapter = gifAdapter.withLoadStateHeaderAndFooter(
+            header = GifLoadingStateAdapter(gifAdapter),
+            footer = GifLoadingStateAdapter(gifAdapter)
+        )
 
     }
 }

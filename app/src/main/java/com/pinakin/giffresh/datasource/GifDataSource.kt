@@ -6,11 +6,11 @@ import com.pinakin.giffresh.data.remote.GifFreshApi
 import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.utils.GifFreshException
 import retrofit2.Response
-import javax.inject.Inject
 
-class GifDataSource @Inject constructor(
+class GifDataSource(
     private val api: GifFreshApi,
-    private val query: String? = null
+    private val query: String? = null,
+    private val localDataSource: LocalDataSource
 ) : PagingSource<Int, GifData>() {
 
 
@@ -38,9 +38,14 @@ class GifDataSource @Inject constructor(
             }
 
             if (response != null && response.meta.status == 200) {
+
+                response.data.forEach { gifData ->
+                    gifData.isFavourite = localDataSource.isFavourite(gifData.id)
+                }
+
                 LoadResult.Page(
                     data = response.data,
-                    prevKey = if (pageIndex == 0) null else pageIndex-1,
+                    prevKey = if (pageIndex == 0) null else pageIndex - 1,
                     nextKey = nextKey
                 )
             } else {
