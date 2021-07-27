@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.pinakin.giffresh.data.local.entity.FavouriteGif
 import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.repository.GifRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +19,7 @@ class GifViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _gifs = MutableStateFlow<PagingData<GifData>>(PagingData.empty())
+
     val gifs: SharedFlow<PagingData<GifData>> = _gifs.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -29,24 +29,35 @@ class GifViewModel @Inject constructor(
     fun fetchGifs(query: String? = null) = viewModelScope.launch {
 
         val flow = gifRepository.fetchGif(query).map { pagingData ->
+
             pagingData.map { gifData ->
+
                 gifData.isFavourite = gifRepository.isFavourite(gifData.id)
                 gifData
             }
         }
 
         flow.collectLatest {
+
             _gifs.value = it
+
         }
+
     }
 
     fun saveGif(gifData: GifData) = viewModelScope.launch {
+
         withContext(Dispatchers.IO) {
+
             gifRepository.saveGif(gifData)
+
         }
+
     }
 
     fun delete(gifData: GifData) = viewModelScope.launch {
+
         gifRepository.deleteGif(gifData)
+
     }
 }
