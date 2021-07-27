@@ -28,50 +28,67 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        binding.viewPager.adapter = ViewPagerAdapter(this)
+        setUpTabs()
+
+        setUpSearchView()
+
+    }
+
+    private fun setUpSearchView() {
 
         binding.tipSearch.setEndIconOnClickListener {
+
             binding.edtSearch.text?.clear()
+
             gifViewModel.fetchGifs()
         }
 
-        binding.edtSearch.setOnEditorActionListener { v, actionId, event ->
+        binding.edtSearch.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 v.hideKeyboard()
+
                 gifViewModel.fetchGifs(binding.edtSearch.text.toString())
+
                 return@setOnEditorActionListener true
             }
 
             return@setOnEditorActionListener false
         }
 
-        setUpTabs()
-
     }
 
     private fun setUpTabs() {
 
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+
         TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-            var tabConfig = if (position == 0) {
-                Pair("Trending", R.drawable.ic_baseline_trending_up_24)
+
+            val tabConfig = if (position == 0) {
+                Pair(R.string.trending, R.drawable.ic_baseline_trending_up_24)
             } else {
-                Pair("Favourite", R.drawable.ic_baseline_favorite_24)
+                Pair(R.string.favourite, R.drawable.ic_baseline_favorite_24)
             }
-            tab.text = tabConfig.first
+
+            tab.text = getString(tabConfig.first)
+
             tab.setIcon(tabConfig.second)
+
         }.attach()
 
         binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
+
                 binding.toolBar.visibility = if (tab?.position == 1) {
                     View.GONE
                 } else {
                     View.VISIBLE
                 }
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
