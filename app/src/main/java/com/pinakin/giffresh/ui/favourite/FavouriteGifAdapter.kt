@@ -1,13 +1,10 @@
 package com.pinakin.giffresh.ui.favourite
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
+import coil.imageLoader
 import coil.load
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.imageview.ShapeableImageView
@@ -39,21 +36,11 @@ class FavouriteGifAdapter(
 
         val data = gifData.images.downsizedMedium
 
-        val imageLoader = ImageLoader.Builder(holder.itemView.context)
-            .componentRegistry {
-
-                if (Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder(holder.itemView.context))
-                } else {
-                    add(GifDecoder())
-                }
-            }.build()
-
         holder.checkBox.isChecked = gifData.isFavourite
 
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            if(buttonView.isPressed){
+            if (buttonView.isPressed) {
 
                 listener(gifData)
 
@@ -61,7 +48,10 @@ class FavouriteGifAdapter(
 
         }
 
-        holder.imgGifItem.load(data.url, imageLoader)
+        holder.imgGifItem.load(data.url, holder.itemView.context.imageLoader) {
+            placeholder(R.drawable.ic_baseline_gif_92)
+            crossfade(true)
+        }
     }
 
     override fun getItemCount(): Int {
