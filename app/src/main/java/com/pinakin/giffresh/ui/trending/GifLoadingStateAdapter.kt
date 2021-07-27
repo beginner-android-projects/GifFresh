@@ -40,7 +40,7 @@ class GifLoadingStateAdapter(
                 holder.progressBar.isVisible = true
                 holder.btnRetry.isVisible = false
                 holder.txtErrorMsg.isVisible = true
-                holder.txtErrorMsg.text = "Fetching Data"
+                holder.txtErrorMsg.text = holder.itemView.context.getString(R.string.fetch_data)
             }
 
             is LoadState.Error -> {
