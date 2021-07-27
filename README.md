@@ -4,8 +4,8 @@ GifFresh allows you to see trending gifs, It also allows you to search gifs and 
 
 GifFresh uses MVVM architecture using Kotlin(100%), Room, Retrofit, DaggerHilt, Coil, Paging, Material Design.
 
-[Screenshot](./screenshot/one.png)
-[ScreenShot](./screenshot/two.png)
+![Screenshot](./screenshot/one.png)
+![ScreenShot](./screenshot/two.png)
 
 ## Tools
 --------
