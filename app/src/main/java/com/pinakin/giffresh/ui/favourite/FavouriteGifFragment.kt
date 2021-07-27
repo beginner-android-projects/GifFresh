@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pinakin.giffresh.R
-import com.pinakin.giffresh.data.local.entity.FavouriteGif
 import com.pinakin.giffresh.databinding.FragmentFavouriteGifBinding
 import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +31,8 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
             favouriteGifViewModel.deleteGif(gifData)
 
         }
+
+        binding.recFavouriteGif.emptyView = binding.txtMessage
 
         binding.recFavouriteGif.adapter = favouriteGifAdapter
 

@@ -47,15 +47,24 @@ class GifPagedAdapter(
 
         holder.imgGifItem.load(data?.url, imageLoader)
 
+
         gifImage?.isFavourite?.let {
 
             holder.checkBox.isChecked = it
 
         }
 
-        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            gifImage?.isFavourite = isChecked
-            listener(gifImage)
+        holder.checkBox.setOnCheckedChangeListener { btnView, isChecked ->
+
+            if(btnView.isPressed){
+                gifImage?.isFavourite?.let {
+                    if (it != isChecked) {
+                        gifImage.isFavourite = isChecked
+                        listener(gifImage)
+                    }
+                }
+            }
+
         }
     }
 

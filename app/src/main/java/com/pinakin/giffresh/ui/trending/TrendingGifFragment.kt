@@ -2,6 +2,7 @@ package com.pinakin.giffresh.ui.trending
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import com.pinakin.giffresh.R
 import com.pinakin.giffresh.databinding.FragmentTrendingGifBinding
 import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -35,9 +37,13 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
+                delay(10000)
                 gifViewModel.gifs.collectLatest {
 
                     gifAdapter.submitData(it)
+
+                    binding.srfTrendingGif.isVisible = true
+                    binding.progressCircular.isVisible = false
 
                     binding.srfTrendingGif.isRefreshing = false
                 }
@@ -52,11 +58,16 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
             gifAdapter.refresh()
 
+            gifAdapter.notifyDataSetChanged()
+
         }
 
     }
 
     private fun setUpGifAdapter() {
+
+        binding.srfTrendingGif.isVisible = false
+        binding.progressCircular.isVisible = true
 
         binding.recTrendingGif.layoutManager = LinearLayoutManager(requireContext())
 
