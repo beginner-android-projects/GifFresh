@@ -18,4 +18,5 @@ import com.pinakin.giffresh.data.local.entity.FavouriteGif
 abstract class GifFreshDataBase : RoomDatabase() {
 
     abstract fun getFavouriteGifDao(): FavouriteGifDao
+
 }

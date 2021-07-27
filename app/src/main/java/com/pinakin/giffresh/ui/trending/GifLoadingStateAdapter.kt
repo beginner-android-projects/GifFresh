@@ -17,6 +17,7 @@ class GifLoadingStateAdapter(
 ) : LoadStateAdapter<GifLoadingStateAdapter.GifLoadStateViewHolder>() {
 
     class GifLoadStateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val progressBar: ContentLoadingProgressBar = itemView.findViewById(
             R.id.progress_bar
         )
@@ -24,6 +25,7 @@ class GifLoadingStateAdapter(
         val btnRetry: MaterialButton = itemView.findViewById(R.id.retry_button)
 
         val txtErrorMsg: MaterialTextView = itemView.findViewById(R.id.error_msg)
+
     }
 
     override fun onBindViewHolder(holder: GifLoadStateViewHolder, loadState: LoadState) {
@@ -31,6 +33,7 @@ class GifLoadingStateAdapter(
         holder.btnRetry.setOnClickListener {
             adapter.retry()
         }
+
         when (loadState) {
 
             is LoadState.Loading -> {
@@ -49,10 +52,9 @@ class GifLoadingStateAdapter(
 
             is LoadState.NotLoading -> {
 
-
             }
-        }
 
+        }
 
     }
 

@@ -10,7 +10,9 @@ class LocalDataSource @Inject constructor(
 ) {
 
     suspend fun insert(gifData: GifData) = dataBase.getFavouriteGifDao().insert(
+
         FavouriteGif(gifData.id, gifData)
+
     )
 
     fun getFavouriteGifs() = dataBase.getFavouriteGifDao().getFavouriteGifs()
@@ -19,4 +21,5 @@ class LocalDataSource @Inject constructor(
 
     suspend fun deleteGif(gifData: GifData) =
         dataBase.getFavouriteGifDao().delete(FavouriteGif(gifData.id, gifData))
+
 }

@@ -35,6 +35,25 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
         setUpGifAdapter()
 
+        binding.srfTrendingGif.setOnRefreshListener {
+
+            refreshAdapter()
+
+        }
+
+        sharedViewModel.isRefreshRequired.observe(
+            viewLifecycleOwner,
+            { isRefreshRequired ->
+
+                if (isRefreshRequired != null) {
+
+                    refreshAdapter()
+
+                }
+
+            }
+        )
+
         viewLifecycleOwner.lifecycleScope.launch {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -56,23 +75,13 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
         gifViewModel.fetchGifs()
 
-        binding.srfTrendingGif.setOnRefreshListener {
+    }
 
-            gifAdapter.refresh()
+    private fun refreshAdapter() {
 
-            gifAdapter.notifyDataSetChanged()
+        gifAdapter.refresh()
 
-        }
-
-        sharedViewModel.isRefreshRequired.observe(
-            viewLifecycleOwner,
-            { isRefreshRequired ->
-
-                if (isRefreshRequired != null) {
-                    gifAdapter.refresh()
-                    gifAdapter.notifyDataSetChanged()
-                }
-            })
+        gifAdapter.notifyDataSetChanged()
 
     }
 
@@ -97,9 +106,13 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
             if (gifData != null) {
 
                 if (gifData.isFavourite) {
+
                     gifViewModel.saveGif(gifData)
+
                 } else {
+
                     gifViewModel.delete(gifData)
+
                 }
 
             }

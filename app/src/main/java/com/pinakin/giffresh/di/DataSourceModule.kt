@@ -15,4 +15,5 @@ class DataSourceModule {
     @Provides
     @Singleton
     fun provideLocalDataSource(database: GifFreshDataBase) = LocalDataSource(database)
+
 }

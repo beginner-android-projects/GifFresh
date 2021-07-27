@@ -21,4 +21,5 @@ class GifFreshDatabaseModule {
         GifFreshDataBase::class.java,
         "gif_fresh_db"
     ).build()
+
 }

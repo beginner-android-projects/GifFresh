@@ -32,13 +32,18 @@ open class BaseTest {
 
     @Before
     open fun setUp() {
+
         hiltRule.inject()
+
         favouriteGifDao = database.getFavouriteGifDao()
+
     }
 
     @After
     fun tearDown() {
+
         database.close()
+
     }
 
     fun getFavouriteGifData(id: String = "testId"): FavouriteGif {
@@ -47,8 +52,12 @@ open class BaseTest {
     }
 
     fun getGifData(id: String = "testId"): GifData {
+
         val downloadSize = Downsized(100, 100, 100, "https://pinakin.dev")
+
         val images = Images(downloadSize, downloadSize, downloadSize, downloadSize, downloadSize)
+
         return GifData(id, images, true)
+
     }
 }

@@ -32,4 +32,5 @@ class GifRepository @Inject constructor(
     suspend fun isFavourite(id: String) = localDataSource.isFavourite(id)
 
     suspend fun deleteGif(gifData: GifData) = localDataSource.deleteGif(gifData)
+
 }

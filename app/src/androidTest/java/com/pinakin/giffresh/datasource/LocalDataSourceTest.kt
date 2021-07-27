@@ -13,8 +13,11 @@ class LocalDataSourceTest : BaseTest() {
     private lateinit var dataSource: LocalDataSource
 
     override fun setUp() {
+
         super.setUp()
+
         dataSource = LocalDataSource(database)
+
     }
 
     @Test
@@ -23,8 +26,11 @@ class LocalDataSourceTest : BaseTest() {
         dataSource.insert(getGifData())
 
         val gifs = dataSource.getFavouriteGifs().first()
+
         val gif = gifs[0]
+
         assertEquals(getGifData().id, gif.id)
+
     }
 
     @Test
@@ -33,7 +39,9 @@ class LocalDataSourceTest : BaseTest() {
         dataSource.insert(getGifData())
 
         val isMarkedAsFavourite = dataSource.isFavourite("testId")
+
         assertTrue(isMarkedAsFavourite)
+
     }
 
     @Test
@@ -42,7 +50,9 @@ class LocalDataSourceTest : BaseTest() {
         dataSource.insert(getGifData())
 
         val isMarkedAsFavourite = dataSource.isFavourite("newId")
+
         assertFalse(isMarkedAsFavourite)
+
     }
 
     @Test
@@ -51,14 +61,19 @@ class LocalDataSourceTest : BaseTest() {
         dataSource.insert(getGifData())
 
         val rowDeleted = dataSource.deleteGif(getGifData())
+
         assertTrue(rowDeleted > 0)
+
     }
 
     @Test
     fun deleteFavouriteGifShouldReturnZeroIfRecordNotDeleted() = runBlocking {
+
         dataSource.insert(getGifData())
 
         val rowDeleted = dataSource.deleteGif(getGifData("newId"))
+
         assertFalse(rowDeleted > 0)
+
     }
 }

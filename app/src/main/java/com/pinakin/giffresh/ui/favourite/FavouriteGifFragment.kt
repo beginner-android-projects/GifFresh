@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pinakin.giffresh.R
+import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.databinding.FragmentFavouriteGifBinding
 import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,30 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        seUpFavouriteRecycler()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                favouriteGifViewModel.favouriteGifs.collect { gifData ->
+
+                    refreshAdapter(gifData)
+
+                }
+            }
+        }
+    }
+
+    private fun refreshAdapter(gifData: List<GifData>) {
+
+        favouriteGifAdapter.gifs = gifData
+
+        favouriteGifAdapter.notifyDataSetChanged()
+
+    }
+
+    private fun seUpFavouriteRecycler() {
         favouriteGifAdapter = FavouriteGifAdapter(emptyList()) { gifData ->
 
             favouriteGifViewModel.deleteGif(gifData)
@@ -43,19 +68,5 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
         binding.recFavouriteGif.adapter = favouriteGifAdapter
 
         binding.recFavouriteGif.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                favouriteGifViewModel.favouriteGifs.collect { gifData ->
-
-                        favouriteGifAdapter.gifs = gifData
-
-                        favouriteGifAdapter.notifyDataSetChanged()
-
-                }
-            }
-        }
     }
 }

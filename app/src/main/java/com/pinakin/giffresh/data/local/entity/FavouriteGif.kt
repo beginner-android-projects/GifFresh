@@ -6,7 +6,10 @@ import com.pinakin.giffresh.data.remote.model.GifData
 
 @Entity(tableName = "fav_gif")
 data class FavouriteGif(
+
     @PrimaryKey
     val id: String,
+
     val data: GifData
+
 )

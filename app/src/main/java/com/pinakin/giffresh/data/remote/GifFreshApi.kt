@@ -21,4 +21,5 @@ interface GifFreshApi {
         @Query("offset") page: Int = 0,
         @Query("limit") size: Int = 8
     ): Response<TrendingGif>
+
 }

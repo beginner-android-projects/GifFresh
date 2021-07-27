@@ -19,7 +19,9 @@ class GifFreshApiModule {
     // Retrofit Logging Interceptor
     @Provides
     fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
+
         level = HttpLoggingInterceptor.Level.BODY
+
     }
 
     // Ok HTTP client

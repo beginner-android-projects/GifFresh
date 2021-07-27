@@ -29,7 +29,9 @@ class GifViewModel @Inject constructor(
     fun fetchGifs(query: String? = null) = viewModelScope.launch {
 
         gifRepository.fetchGif(query).collectLatest {
+
             _gifs.value = it
+
         }
     }
 

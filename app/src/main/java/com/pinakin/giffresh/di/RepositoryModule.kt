@@ -20,4 +20,5 @@ class RepositoryModule {
         api: GifFreshApi,
         localDataSource: LocalDataSource
     ) = GifRepository(api, localDataSource)
+
 }

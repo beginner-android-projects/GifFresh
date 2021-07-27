@@ -18,4 +18,5 @@ interface FavouriteGifDao {
 
     @Query("SELECT EXISTS(SELECT * FROM fav_gif where id = :id)")
     suspend fun isFavourite(id: String): Boolean
+
 }
