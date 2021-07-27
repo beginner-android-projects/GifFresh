@@ -16,7 +16,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltAndroidTest
-open class DatabaseTest {
+open class BaseTest {
 
     @get:Rule
     val hiltRule by lazy { HiltAndroidRule(this) }

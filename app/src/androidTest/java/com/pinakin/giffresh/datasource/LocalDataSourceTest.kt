@@ -1,6 +1,6 @@
 package com.pinakin.giffresh.datasource
 
-import com.pinakin.giffresh.DatabaseTest
+import com.pinakin.giffresh.BaseTest
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -8,7 +8,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 @HiltAndroidTest
-class LocalDataSourceTest : DatabaseTest() {
+class LocalDataSourceTest : BaseTest() {
 
     private lateinit var dataSource: LocalDataSource
 

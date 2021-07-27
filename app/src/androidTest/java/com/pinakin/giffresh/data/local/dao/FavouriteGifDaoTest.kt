@@ -1,10 +1,6 @@
 package com.pinakin.giffresh.data.local.dao
 
-import com.pinakin.giffresh.DatabaseTest
-import com.pinakin.giffresh.data.local.entity.FavouriteGif
-import com.pinakin.giffresh.data.remote.model.Downsized
-import com.pinakin.giffresh.data.remote.model.GifData
-import com.pinakin.giffresh.data.remote.model.Images
+import com.pinakin.giffresh.BaseTest
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -12,7 +8,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 @HiltAndroidTest
-class FavouriteGifDaoTest : DatabaseTest() {
+class FavouriteGifDaoTest : BaseTest() {
 
 
     @Test
