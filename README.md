@@ -9,6 +9,12 @@ GifFresh uses MVVM architecture using Kotlin(100%), Room, Retrofit, DaggerHilt, 
   <img src="./screenshot/two.png" width="240" /> 
 </p>
 
+## Features
+- Access to lots of Trending gif
+- Support for Dark & Light MODE (Adopts to device configuration)
+- Add gifs to Favourite 
+
+
 ## Tools
 
 - Android Studio (version 4.2.2)
