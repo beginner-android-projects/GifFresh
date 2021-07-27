@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pinakin.giffresh.R
 import com.pinakin.giffresh.databinding.FragmentTrendingGifBinding
+import com.pinakin.giffresh.ui.favourite.SharedViewModel
 import com.pinakin.giffresh.utils.viewBindings
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,6 +24,8 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
     private val binding by viewBindings(FragmentTrendingGifBinding::bind)
 
     private val gifViewModel: GifViewModel by activityViewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var gifAdapter: GifPagedAdapter
 
@@ -37,12 +39,12 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                delay(10000)
                 gifViewModel.gifs.collectLatest {
 
                     gifAdapter.submitData(it)
 
                     binding.srfTrendingGif.isVisible = true
+
                     binding.progressCircular.isVisible = false
 
                     binding.srfTrendingGif.isRefreshing = false
@@ -61,6 +63,16 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
             gifAdapter.notifyDataSetChanged()
 
         }
+
+        sharedViewModel.isRefreshRequired.observe(
+            viewLifecycleOwner,
+            { isRefreshRequired ->
+
+                if (isRefreshRequired != null) {
+                    gifAdapter.refresh()
+                    gifAdapter.notifyDataSetChanged()
+                }
+            })
 
     }
 

@@ -53,7 +53,11 @@ class FavouriteGifAdapter(
 
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            listener(gifData)
+            if(buttonView.isPressed){
+
+                listener(gifData)
+
+            }
 
         }
 

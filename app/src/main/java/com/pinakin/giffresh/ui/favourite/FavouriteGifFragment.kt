@@ -3,6 +3,7 @@ package com.pinakin.giffresh.ui.favourite
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,9 @@ import kotlinx.coroutines.launch
 class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
 
     private val favouriteGifViewModel: FavouriteGifViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
     private val binding by viewBindings(FragmentFavouriteGifBinding::bind)
 
     private lateinit var favouriteGifAdapter: FavouriteGifAdapter
@@ -28,8 +32,10 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
         super.onViewCreated(view, savedInstanceState)
 
         favouriteGifAdapter = FavouriteGifAdapter(emptyList()) { gifData ->
+
             favouriteGifViewModel.deleteGif(gifData)
 
+            sharedViewModel.setRefreshRequired(true)
         }
 
         binding.recFavouriteGif.emptyView = binding.txtMessage
@@ -42,11 +48,11 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                favouriteGifViewModel.favouriteGifs.collect {
+                favouriteGifViewModel.favouriteGifs.collect { gifData ->
 
-                    favouriteGifAdapter.gifs = it
+                        favouriteGifAdapter.gifs = gifData
 
-                    favouriteGifAdapter.notifyDataSetChanged()
+                        favouriteGifAdapter.notifyDataSetChanged()
 
                 }
             }
