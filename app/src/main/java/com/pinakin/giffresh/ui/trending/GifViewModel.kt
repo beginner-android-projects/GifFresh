@@ -46,7 +46,7 @@ class GifViewModel @Inject constructor(
         }
     }
 
-    fun deleteGif(favouriteGif: FavouriteGif) = viewModelScope.launch {
-        gifRepository.deleteFavouriteGif(favouriteGif)
+    fun delete(gifData: GifData) = viewModelScope.launch {
+        gifRepository.deleteGif(gifData)
     }
 }

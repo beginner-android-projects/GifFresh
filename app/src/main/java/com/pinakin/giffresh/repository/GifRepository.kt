@@ -3,7 +3,6 @@ package com.pinakin.giffresh.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.pinakin.giffresh.data.local.entity.FavouriteGif
 import com.pinakin.giffresh.data.remote.GifFreshApi
 import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.datasource.GifDataSource
@@ -24,7 +23,7 @@ class GifRepository @Inject constructor(
             enablePlaceholders = false
         ),
         pagingSourceFactory = {
-            GifDataSource(api,query)
+            GifDataSource(api, query)
         }
     ).flow
 
@@ -32,5 +31,5 @@ class GifRepository @Inject constructor(
 
     suspend fun isFavourite(id: String) = localDataSource.isFavourite(id)
 
-    suspend fun deleteFavouriteGif(favouriteGif: FavouriteGif) = localDataSource.deleteFavouriteGif(favouriteGif)
+    suspend fun deleteGif(gifData: GifData) = localDataSource.deleteGif(gifData)
 }

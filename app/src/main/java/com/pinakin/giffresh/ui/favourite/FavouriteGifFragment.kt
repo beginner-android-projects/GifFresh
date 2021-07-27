@@ -29,7 +29,7 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
         super.onViewCreated(view, savedInstanceState)
 
         favouriteGifAdapter = FavouriteGifAdapter(emptyList()) { gifData ->
-            favouriteGifViewModel.deleteGif(FavouriteGif(gifData.id, gifData))
+            favouriteGifViewModel.deleteGif(gifData)
 
         }
         binding.recFavouriteGif.adapter = favouriteGifAdapter

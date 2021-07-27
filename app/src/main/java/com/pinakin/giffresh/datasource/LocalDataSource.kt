@@ -17,5 +17,6 @@ class LocalDataSource @Inject constructor(
 
     suspend fun isFavourite(id: String) = dataBase.getFavouriteGifDao().isFavourite(id)
 
-    suspend fun deleteFavouriteGif(favouriteGif: FavouriteGif) = dataBase.getFavouriteGifDao().delete(favouriteGif)
+    suspend fun deleteGif(gifData: GifData) =
+        dataBase.getFavouriteGifDao().delete(FavouriteGif(gifData.id, gifData))
 }

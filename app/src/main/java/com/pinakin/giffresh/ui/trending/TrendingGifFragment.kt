@@ -44,7 +44,7 @@ class TrendingGifFragment : Fragment(R.layout.fragment_trending_gif) {
                 if (gifData.isFavourite) {
                     gifViewModel.saveGif(gifData)
                 } else {
-                    gifViewModel.deleteGif(FavouriteGif(gifData.id, gifData))
+                    gifViewModel.delete(gifData)
                 }
             }
         }
