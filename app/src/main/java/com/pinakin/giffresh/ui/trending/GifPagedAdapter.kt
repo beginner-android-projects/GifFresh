@@ -37,8 +37,11 @@ class GifPagedAdapter(
 
 
         holder.imgGifItem.load(data?.url, holder.itemView.context.imageLoader){
+
             placeholder(R.drawable.ic_baseline_gif_92)
+
             crossfade(true)
+
         }
 
         gifImage?.isFavourite?.let {
