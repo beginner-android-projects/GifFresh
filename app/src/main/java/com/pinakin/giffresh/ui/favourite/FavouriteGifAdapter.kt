@@ -20,8 +20,11 @@ class FavouriteGifAdapter(
 ) : RecyclerView.Adapter<FavouriteGifAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val imgGifItem: ShapeableImageView = itemView.findViewById(R.id.gif)
+
         val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkbox_favourite)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,21 +34,27 @@ class FavouriteGifAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val gifData = gifs[position]
+
         val data = gifData.images.downsizedMedium
+
         val imageLoader = ImageLoader.Builder(holder.itemView.context)
             .componentRegistry {
+
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder(holder.itemView.context))
                 } else {
                     add(GifDecoder())
                 }
-            }
-            .build()
+            }.build()
 
         holder.checkBox.isChecked = gifData.isFavourite
+
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+
             listener(gifData)
+
         }
 
         holder.imgGifItem.load(data.url, imageLoader)

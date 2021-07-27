@@ -32,15 +32,21 @@ class FavouriteGifFragment : Fragment(R.layout.fragment_favourite_gif) {
             favouriteGifViewModel.deleteGif(gifData)
 
         }
+
         binding.recFavouriteGif.adapter = favouriteGifAdapter
+
         binding.recFavouriteGif.layoutManager = GridLayoutManager(requireContext(), 2)
 
         viewLifecycleOwner.lifecycleScope.launch {
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
                 favouriteGifViewModel.favouriteGifs.collect {
+
                     favouriteGifAdapter.gifs = it
+
                     favouriteGifAdapter.notifyDataSetChanged()
+
                 }
             }
         }

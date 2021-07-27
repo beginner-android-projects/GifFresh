@@ -21,38 +21,49 @@ class GifPagedAdapter(
 ) : PagingDataAdapter<GifData, GifPagedAdapter.ViewHolder>(DataDifferentiator) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val imgGifItem: ShapeableImageView = itemView.findViewById(R.id.gif)
+
         val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkbox_favourite)
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val gifImage = getItem(position)
+
         val data = gifImage?.images?.downsizedMedium
+
         val imageLoader = ImageLoader.Builder(holder.itemView.context)
             .componentRegistry {
+
                 if (Build.VERSION.SDK_INT >= 28) {
                     add(ImageDecoderDecoder(holder.itemView.context))
                 } else {
                     add(GifDecoder())
                 }
-            }
-            .build()
+
+            }.build()
 
         holder.imgGifItem.load(data?.url, imageLoader)
 
         gifImage?.isFavourite?.let {
+
             holder.checkBox.isChecked = it
+
         }
 
-        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             gifImage?.isFavourite = isChecked
             listener(gifImage)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_trending_gif, parent, false)
+
         return ViewHolder(view)
     }
 

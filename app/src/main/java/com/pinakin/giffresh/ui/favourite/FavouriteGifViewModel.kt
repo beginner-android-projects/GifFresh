@@ -2,7 +2,6 @@ package com.pinakin.giffresh.ui.favourite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pinakin.giffresh.data.local.entity.FavouriteGif
 import com.pinakin.giffresh.data.remote.model.GifData
 import com.pinakin.giffresh.repository.GifRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +25,8 @@ class FavouriteGifViewModel @Inject constructor(
     )
 
     fun deleteGif(gifData: GifData) = viewModelScope.launch {
+
         repository.deleteGif(gifData)
+
     }
 }
